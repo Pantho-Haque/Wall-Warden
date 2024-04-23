@@ -10,10 +10,11 @@ class ball():
         center_y=self.rect.y+self.ball_rad
         pygame.draw.circle(screen,white,(center_x,center_y),self.ball_rad)
 
-    def move(self,pp,cp):
+    def move(self,pp,cp,speed_in=0):
+        # self.speed_x-=speed_inc
+        # self.speed_y+=speed_inc
 
         # check for top and bottom 
-    
         if( self.rect.top < margin ):
             self.speed_y *=-1
         if( self.rect.bottom > screen_height ):

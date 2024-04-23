@@ -17,6 +17,7 @@ while run:
 
     draw_board()
     draw_text("CPU: "+ str(cpu_score) , font , white , 20,15)
+    draw_text("Ball Speed: "+ str(abs(pong.speed_x)) , font , white , screen_width//2-100 ,15)
     draw_text("Player: "+ str(player_score) , font , white , screen_width-150 ,15)
     
     cpu_paddle.draw()
@@ -25,6 +26,7 @@ while run:
 
 
     if live_ball==True:
+        speed_inc+=1
         winner = pong.move(player_paddle,cpu_paddle)
         if winner==0 :
             player_paddle.move()
@@ -38,7 +40,17 @@ while run:
             elif winner==-1:
                 cpu_score+=1
             cmd="Click to Begin"
-    
+    if speed_inc>300:
+        speed_inc=0
+        if pong.speed_x<0:
+            pong.speed_x-=1
+        if pong.speed_x>0:
+            pong.speed_x+=1
+        if pong.speed_y<0:
+            pong.speed_y-=1
+        if pong.speed_y>0:
+            pong.speed_y+=1
+
     if live_ball==False:
         if winner==0 :
             draw_text("CLICK ANYWHERE TO START", font , white , 100  ,screen_height//2-100)

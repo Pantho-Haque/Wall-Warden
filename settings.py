@@ -10,8 +10,8 @@ fps=60
 cpu_score =0
 player_score =0
 winner =0 
+speed_inc=0
 font=pygame.font.SysFont("Constantia",30)
-cmd="Click to begin"
 
 #  screen building 
 fpsClock= pygame.time.Clock()
