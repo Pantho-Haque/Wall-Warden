@@ -16,9 +16,8 @@ while run:
     fpsClock.tick(fps)
 
     draw_board()
-    draw_text(cmd, font , white , 20,15)
-    draw_text("CPU: "+ str(cpu_score) , font , white , 20,65)
-    draw_text("Player: "+ str(player_score) , font , white , screen_width-150 ,65)
+    draw_text("CPU: "+ str(cpu_score) , font , white , 20,15)
+    draw_text("Player: "+ str(player_score) , font , white , screen_width-150 ,15)
     
     cpu_paddle.draw()
     player_paddle.draw()
@@ -39,7 +38,16 @@ while run:
             elif winner==-1:
                 cpu_score+=1
             cmd="Click to Begin"
-
+    
+    if live_ball==False:
+        if winner==0 :
+            draw_text("CLICK ANYWHERE TO START", font , white , 100  ,screen_height//2-100)
+        if winner==1 :
+            draw_text("YOU SCORED!", font , white , 100  ,screen_height//2-100)
+            draw_text("CLICK ANYWHERE TO START", font , white , 100  ,screen_height//2-50)
+        if winner==-1 :
+            draw_text("CPU SCORED!", font , white , 100  ,screen_height//2-100)
+            draw_text("CLICK ANYWHERE TO START", font , white , 100  ,screen_height//2-50)
 
     for event in pygame.event.get():
         if event.type==pygame.QUIT:

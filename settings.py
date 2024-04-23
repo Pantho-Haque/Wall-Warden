@@ -5,7 +5,7 @@ pygame.init()
 
 # defining variabls
 live_ball=False
-margin =100
+margin =50
 fps=60
 cpu_score =0
 player_score =0
@@ -15,7 +15,7 @@ cmd="Click to begin"
 
 #  screen building 
 fpsClock= pygame.time.Clock()
-screen_height=550
+screen_height=500
 screen_width=600
 screen=pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption("Pong")
