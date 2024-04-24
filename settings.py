@@ -15,10 +15,12 @@ font=pygame.font.SysFont("Constantia",30)
 
 #  screen building 
 fpsClock= pygame.time.Clock()
-screen_height=500
-screen_width=600
+
+screen_width,screen_height = 600,500
+paddle_width,paddle_height=15,100
 screen=pygame.display.set_mode((screen_width,screen_height))
-pygame.display.set_caption("Pong")
+
+pygame.display.set_caption("Wall Warden")
 
 
 # defining colors in RGB

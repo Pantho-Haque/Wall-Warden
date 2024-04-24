@@ -6,9 +6,9 @@ from paddle import paddle
 from ball import ball
 from draw import *
 
-player_paddle=paddle(screen_width-40 , screen_height//2)
-cpu_paddle=paddle(20 , screen_height//2)
-pong=ball(screen_width-60 , screen_height//2+50)
+cpu_paddle=paddle(10 , screen_height//2 - paddle_height//2,paddle_width,paddle_height)
+player_paddle=paddle(screen_width-10-paddle_width , screen_height//2 - paddle_height//2 ,paddle_width,paddle_height)
+pong=ball(screen_width//2  -10, screen_height//2 )
 
 # Running Process
 run =True
@@ -22,7 +22,6 @@ while run:
     
     cpu_paddle.draw()
     player_paddle.draw()
-    
 
 
     if live_ball==True:
@@ -40,6 +39,7 @@ while run:
             elif winner==-1:
                 cpu_score+=1
             cmd="Click to Begin"
+
     if speed_inc>300:
         speed_inc=0
         if pong.speed_x<0:
@@ -64,6 +64,7 @@ while run:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             run =False
+            break
         if event.type == pygame.MOUSEBUTTONDOWN and live_ball== False:
             live_ball=True
             pong.reset(screen_width-60 , screen_height//2+50)

@@ -1,10 +1,10 @@
 from settings import *
 
 class paddle():
-    def __init__(self,x,y):
+    def __init__(self,x,y,height,width):
         self.x=x
         self.y=y
-        self.rect=Rect(self.x,self.y,20,100)
+        self.rect=Rect(self.x,self.y,height,width)
         self.speed=5
     
     def draw(self):
@@ -16,7 +16,7 @@ class paddle():
             self.rect.move_ip(0, -1*self.speed)
         if(key[pygame.K_DOWN] and self.rect.bottom<screen_height):
             self.rect.move_ip(0, 1*self.speed)
-
+ 
     def ai(self,pong):
         if self.rect.centery < pong.rect.top and self.rect.bottom < screen_height:
             self.rect.move_ip(0,self.speed)

@@ -15,9 +15,7 @@ class ball():
         # self.speed_y+=speed_inc
 
         # check for top and bottom 
-        if( self.rect.top < margin ):
-            self.speed_y *=-1
-        if( self.rect.bottom > screen_height ):
+        if( self.rect.top < margin ) or ( self.rect.bottom > screen_height ):
             self.speed_y *=-1
 
         # check for collition with python builtin rectangle collition
@@ -32,7 +30,6 @@ class ball():
             self.winner=-1
 
         # updating the ball position 
-
         self.rect.x += self.speed_x
         self.rect.y += self.speed_y
 
@@ -42,7 +39,8 @@ class ball():
         self.x=x
         self.y=y
         self.ball_rad=8
-        self.rect=Rect(self.x,self.y,self.ball_rad*2,self.ball_rad*2)
+        self.rect=pygame.draw.circle(screen, white, (x, y), self.ball_rad)
+        # (self.x,self.y,self.ball_rad*2,self.ball_rad*2)
         self.speed_x=-4
         self.speed_y= 4
         self.winner=0   
