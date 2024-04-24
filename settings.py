@@ -1,15 +1,16 @@
+import time
 import pygame
 from pygame.locals import *
 
 pygame.init()
 
 # defining variabls
-live_ball=False
+live=False
 margin =50
 fps=60
 cpu_score =0
 player_score =0
-winner =0 
+winner = ""
 speed_inc=0
 font=pygame.font.SysFont("Constantia",30)
 
