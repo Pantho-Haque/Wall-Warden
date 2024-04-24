@@ -32,8 +32,9 @@ class ball():
         #     self.speed_x *= -1
         
         
-        if self.y >= cp.y and self.y <= cp.y+cp.height:
-            if self.x-self.radius  <= cp.x +cp.width :
+
+        if self.y >= cp.y and self.y < cp.y+cp.height:
+            if self.x-self.radius  < cp.x +cp.width :
                 self.speed_x *= -1
 
                 middle_y=cp.y + cp.height //2
@@ -42,8 +43,8 @@ class ball():
                 self.speed_y= -1* diff_y // reduction_factor
 
         
-        if self.y >= pp.y and self.y <= pp.y+pp.height:
-            if self.x + self.radius >= pp.x:
+        if self.y >= pp.y and self.y < pp.y+pp.height:
+            if self.x + self.radius > pp.x:
                 self.speed_x *= -1
 
                 middle_y=pp.y + pp.height //2
@@ -51,7 +52,7 @@ class ball():
                 reduction_factor = (pp.height//2) // self.speed
                 self.speed_y=-1* diff_y // reduction_factor-1
         
-        if self.y<0:
+        if self.x<0:
             self.score[0]+=1
             self.reset()
         elif self.x>screen_width:
