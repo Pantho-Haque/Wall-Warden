@@ -79,108 +79,111 @@ def classify_xdist(x):
     else: return 'f'
 
     
-ypos = [12, 50, 100, 150, 200, 250, 300, 350, 400,450]
+ypos = [55, 100, 150, 200, 250, 300, 350, 400,450]
 yspeed = [-7.5, -6, -4, -2, -0.5, 0.5, 2, 4, 6, 7.5]
 xdist = [550, 500, 400, 300, 200, 100, 40]
 
 ball_positions = [(x, y, ys) for y in ypos for ys in yspeed for x in xdist]
 results = []
 prevy=12
-# Main game loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            running = False
-        elif event.type == MOUSEBUTTONDOWN and not live:
-            live = True
+
+
+with open('dataset', 'w') as f:
     
-    if live:
+    # Main game loop
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                running = False
+            elif event.type == MOUSEBUTTONDOWN and not live:
+                live = True
         
-        for pos in ball_positions:
-            xi,yi,ysi=x, y, ys = pos
-            if(prevy<=y):
-                prevy=y
-            else:
-                live=False
-            y+=margin
-            while x >= 0:
-                draw_board()
-                pygame.draw.circle(screen, white, (x, int(y)), 7)
-                pygame.display.flip()
-                fpsClock.tick(fps)
+        if live:
+            
+            for pos in ball_positions:
+                xi,yi,ysi=x, y, ys = pos
+                if(prevy<=y):
+                    prevy=y
+                else:
+                    live=False
+                while x >= 0:
+                    draw_board()
+                    pygame.draw.circle(screen, white, (x, int(y)), 7)
+                    pygame.display.flip()
+                    fpsClock.tick(fps)
 
-                # Update ball position
-                if (y<=margin) or (y + 7 >screen_height):
-                    ys *= -1
+                    # Update ball position
+                    if (y<=margin) or (y + 7 >screen_height):
+                        ys *= -1
 
-                x += -4
-                y += ys
+                    x += -4
+                    y += ys
 
-                # Check if ball crosses x < 21
-                if x < 21:
-                    print(yi, ysi, xi , y)
-                    results.append([classify_y(yi),classify_yspeed (ysi), classify_xdist(xi) , classify_y(y)])
-                    break
-                
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        running = False
-                        live = False
+                    # Check if ball crosses x < 21
+                    if x < 21:
+                        print(f"({yi}, {ysi}, {xi}, {y}),", file=f)
+                        results.append([classify_y(yi),classify_yspeed (ysi), classify_xdist(xi) , classify_y(y)])
+                        break
+                    
+                    for event in pygame.event.get():
+                        if event.type == QUIT:
+                            running = False
+                            live = False
+                            break
+                    if not running or not live:
                         break
                 if not running or not live:
                     break
             if not running or not live:
                 break
-        if not running or not live:
-            break
-    else:
-        initial_screen()
-        pygame.display.flip()
-        fpsClock.tick(fps)
+        else:
+            initial_screen()
+            pygame.display.flip()
+            fpsClock.tick(fps)
 
-pygame.quit()
+    pygame.quit()
 
-# Output the results
-print("Results:", results)
-rulebook=[]
-for index in range(len(results)):
-    value = results[index]
-    rulebook.append([
-        f'rule{index}=min(y_mem["{value[0]}"], speed_mem["{value[1]}"],dist_mem["{value[2]}"])',
-        value[3]
-    ])
+    # Output the results
+    print("Results:", results, file=f)
+    rulebook=[]
+    for index in range(len(results)):
+        value = results[index]
+        rulebook.append([
+            f'rule{index}=min(y_mem["{value[0]}"], speed_mem["{value[1]}"],dist_mem["{value[2]}"])',
+            value[3]
+        ])
 
-for i in rulebook:
-    print(i[0])
+    for i in rulebook:
+        print(i[0], file=f)
 
-# Initialize the degree dictionary
-degree = {
-    "A": "",
-    "B": "",
-    "C": "",
-    "D": "",
-    "E": "",
-    "F": "",
-    "G": "",
-    "H": "",
-    "I": "",
-    "J": ""
-}
+    # Initialize the degree dictionary
+    degree = {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "E": "",
+        "F": "",
+        "G": "",
+        "H": "",
+        "I": "",
+        "J": ""
+    }
 
-# Populate the degree dictionary
-for entry in rulebook:
-    rule, y_final = entry
-    rule_part = rule.split('=')[0]  # Extract the part before the '=' sign
-    degree[y_final] += rule_part + ", "  # Concatenate with a comma
+    # Populate the degree dictionary
+    for entry in rulebook:
+        rule, y_final = entry
+        rule_part = rule.split('=')[0]  # Extract the part before the '=' sign
+        degree[y_final] += rule_part + ", "  # Concatenate with a comma
 
-# Add "max(" and ")" and remove trailing comma
-for key, value in degree.items():
-    degree[key] = "max(" + value[:-2] + ")"
+    # Add "max(" and ")" and remove trailing comma
+    for key, value in degree.items():
+        degree[key] = "max(" + value[:-2] + ")"
 
-# Print the degree dictionary
-for key, value in degree.items():
-    print(f"{key}= {value}")
+    # Print the degree dictionary
+    for key, value in degree.items():
+        print(f"{key}= {value}", file=f)
 
 
 

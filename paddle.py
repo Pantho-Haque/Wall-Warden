@@ -3,6 +3,7 @@ import numpy as np
 from settings import *
 
 from fuzzyPPP import predictYPosition
+from GeneticAlgo import predict_y_position
 
 class paddle():
     def __init__(self,x,y,height,width):
@@ -33,10 +34,17 @@ class paddle():
 
         future_steps = abs(pong.x - self.x) // abs(pong.speed_x)  # Number of steps until the ball reaches the paddle
         p = predictYPosition(pong.y, pong.speed_y, pong.x - self.x - self.width)
+       
+        q= predict_y_position(pong.y, pong.speed_y, pong.x - self.x - self.width)
+       
 
         if p is None:
             return
+        if q is None:
+            return
 
+        p=(p+q)/2
+        
         # Predict the ball's future position by considering its current direction and speed
         future_y = pong.y + pong.speed_y * future_steps
 
