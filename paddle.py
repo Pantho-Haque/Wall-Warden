@@ -43,10 +43,17 @@ class paddle():
         if q is None:
             return
 
-        p=(p+q)/2
+        # p=(p+q)/2
         
         # Predict the ball's future position by considering its current direction and speed
         future_y = pong.y + pong.speed_y * future_steps
+
+        if(abs(future_y-p)<10):
+            future_y=p
+        
+        if(abs(future_y-q)<10):
+            future_y=q
+        
 
         # Adjust the paddle's position slightly to stay ahead of the ball
         if pong.speed_y > 0:  # Ball moving downwards
@@ -55,7 +62,7 @@ class paddle():
             target_position = future_y - self.height / 3
 
         # Implement a buffer zone to reduce fluctuation
-        buffer_zone = 3
+        buffer_zone = paddle_height-10
 
         if self.y < target_position - buffer_zone:
             self.y += self.speed
